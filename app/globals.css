@@ -120,27 +120,30 @@
     @apply bg-background text-foreground;
   }
 }
-/* Added animation for ticker bar */
 @keyframes scroll {
   0% {
-    transform: translateX(100%);
+    transform: translateX(0%);
   }
   100% {
     transform: translateX(-100%);
   }
 }
-
-.animate-scroll {
-  animation: scroll 60s linear infinite;
-}
-
-/* Added horizontal scroll animation for recommendation cards */
-@keyframes scroll-horizontal {
+@keyframes scroll-2 {
   0% {
-    transform: translateX(0);
+    transform: translateX(100%);
   }
   100% {
-    transform: translateX(-50%);
+    transform: translateX(0%);
+  }
+}
+
+
+@keyframes scroll-horizontal {
+  0% {
+    transform: translateX(100%);
+  }
+  100% {
+    transform: translateX(-100%);
   }
 }
 
@@ -150,4 +153,13 @@
 
 .animate-scroll-horizontal:hover {
   animation-play-state: paused;
+}
+
+.animate-scroll {
+  /* display: inline-block; */
+  animation: scroll 20s linear infinite;
+}
+.animate-scroll-2 {
+  /* display: inline-block; */
+  animation: scroll-2 20s linear infinite;
 }
