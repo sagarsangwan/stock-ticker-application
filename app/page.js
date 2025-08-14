@@ -1,3 +1,4 @@
+import SearchBox from "@/components/search-box";
 import StockTicker from "@/components/stock-ticker";
 import Image from "next/image";
 
@@ -13,6 +14,7 @@ export default function Home() {
               Search and track your favorite stocks with real-time data
             </p>
           </div>
+          <SearchBox />
         </div>
       </main>
     </div>
