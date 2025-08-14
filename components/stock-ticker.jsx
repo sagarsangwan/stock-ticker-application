@@ -1,38 +1,4 @@
-"use client";
-import React, { useEffect, useState } from "react";
-
-function StockTicker() {
-  const [movers, setMovers] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
-  useEffect(() => {
-    async function fetchMovers() {
-      try {
-        const res = await fetch("/api/movers", { cache: "no-store" });
-        const data = await res.json();
-        // setMovers(Array.isArray(data) ? data : data.gainers || []);
-        setMovers(
-          [...(data.gainers || []), ...(data.losers || [])].sort(
-            () => Math.random() - 0.5
-          )
-        );
-      } catch (e) {
-        console.log(e);
-      } finally {
-        setIsLoading(false);
-      }
-    }
-    fetchMovers();
-  }, []);
-
-  if (isLoading) {
-    return (
-      <div className=" flex bg-primary text-primary-foreground py-2 overflow-hidden min-h-[200px]">
-        <div className="animate-pulse text-center m-auto items-center">
-          Loading market data...
-        </div>
-      </div>
-    );
-  }
+async function StockTicker({ movers }) {
   return (
     <div className="bg-slate-800 text-white py-4 overflow-hidden">
       <div className="flex animate-scroll-horizontal space-x-4 px-4">
