@@ -37,7 +37,7 @@ function SearchBox() {
     <div>
       <div className="flex items-center space-x-4">
         <Input
-          className="flex-1"
+          className={`flex-1 ${error ? "border-red-500" : ""}`}
           type="text"
           placeholder="Search stocks (e.g., RELIANCE, TCS)"
           value={query}
@@ -55,9 +55,7 @@ function SearchBox() {
         </Button>
       </div>
       {error && (
-        <span className="px-4 py-2 text-center text-red-500">
-          Error: {error}
-        </span>
+        <div className="px-4 py-2  text-red-500 text-left">Error: {error}</div>
       )}
       {showResults && (
         <ul className="  ">
@@ -73,7 +71,7 @@ function SearchBox() {
               </Link>
             ))
           ) : (
-            <div>No result found</div>
+            <div className="text-left">No result found</div>
           )}
         </ul>
       )}

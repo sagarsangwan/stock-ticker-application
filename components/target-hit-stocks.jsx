@@ -1,6 +1,6 @@
 async function TargetHitStock({ movers }) {
   return (
-    <div className="bg-slate-800 flex text-white py-4  relative h-50 overflow-hidden w-[100vw]">
+    <div className="bg-slate-800 flex text-white py-4  relative h-50 overflow-hidden ">
       <div className=" absolute animate-scroll flex space-x-4 px-4">
         {movers.map((mover, index) => (
           <div
