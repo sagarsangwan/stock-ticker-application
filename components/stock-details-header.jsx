@@ -35,8 +35,8 @@ function StockHeader({ stockDetails }) {
       setIsFavorite(false);
     } else {
       updatedFavorites = [...storedFavorites, stockDetails];
+      setIsFavorite(true);
     }
-    setIsFavorite(true);
 
     setFavorites(updatedFavorites);
     localStorage.setItem("favorites", JSON.stringify(updatedFavorites));
@@ -64,7 +64,7 @@ function StockHeader({ stockDetails }) {
         variant={isFavorite ? "outline" : "ghost"}
         className={`${
           isFavorite ? "text-gray-900" : "text-white"
-        }  transition-colors duration-200`}
+        }  transition-colors duration-200 cursor-pointer`}
       >
         <Heart size={20} fill={isFavorite ? "red" : "none"} color="red" />
         <span className="hidden sm:inline">
