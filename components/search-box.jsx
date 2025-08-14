@@ -5,6 +5,7 @@ import { searchStocks } from "@/lib/api";
 import { Card } from "./ui/card";
 import { Button } from "./ui/button";
 import { useRouter } from "next/navigation";
+import Link from "next/link";
 
 function SearchBox() {
   const [query, setQuery] = useState("");
@@ -30,10 +31,7 @@ function SearchBox() {
     }, 300);
     return () => clearTimeout(delay);
   }, [query]);
-  const handleResultClick = (clickedStock) => {
-    console.log(clickedStock);
-    return router.push(`/stock/${clickedStock.toLowerCase()}`);
-  };
+
   return (
     <div>
       <div>
@@ -51,15 +49,14 @@ function SearchBox() {
         <ul className="  ">
           {results.length > 0 ? (
             results.map((result) => (
-              <li
-                className="px-4 py-2 hover:bg-gray-100 cursor-pointer flex items-center"
-                onClick={() => {
-                  handleResultClick(result.symbol);
-                }}
-                key={result.symbol}
-              >
-                {result.company}
-              </li>
+              <Link key={result.symbol} href={`/stock/${result.symbol}`}>
+                <li
+                  className="px-4 py-2 hover:bg-gray-100 cursor-pointer flex items-center"
+                  key={result.symbol}
+                >
+                  {result.company}
+                </li>
+              </Link>
             ))
           ) : (
             <div>No result found</div>
