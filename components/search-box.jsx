@@ -24,6 +24,7 @@ function SearchBox() {
         console.log(e);
       }
     }, 300);
+    return () => clearTimeout(delay);
   }, [query]);
   return (
     <div>
