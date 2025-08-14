@@ -1,4 +1,5 @@
 import SearchBox from "@/components/search-box";
+import StockTickers from "@/components/stock-tickers";
 import TargetHitStock from "@/components/target-hit-stocks";
 import { fetchMovers } from "@/lib/api";
 
@@ -8,6 +9,7 @@ export default async function Home() {
   return (
     <div className="min-h-screen ">
       <TargetHitStock movers={movers} />
+
       <main className="container mx-auto px-4 py-8">
         <div className="max-w-2xl mx-auto text-center space-y-8">
           <div className="space-y-4">
@@ -19,6 +21,9 @@ export default async function Home() {
           <SearchBox />
         </div>
       </main>
+      <div className="fixed bottom-0 w-full">
+        <StockTickers movers={movers} />
+      </div>
     </div>
   );
 }
