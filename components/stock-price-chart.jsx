@@ -1,33 +1,33 @@
 "use client";
 import React from "react";
-import {
-  LineChart,
-  Line,
-  XAxis,
-  YAxis,
-  CartesianGrid,
-  Tooltip,
-  ResponsiveContainer,
-  Legend,
-} from "recharts";
+import { LineChart, Line, ResponsiveContainer, Tooltip, YAxis } from "recharts";
 
 function StockPriceChart({ stockPrices }) {
   return (
     <div>
-      <ResponsiveContainer width={300} height={300}>
+      <ResponsiveContainer width="100%" height={300}>
         <LineChart data={stockPrices}>
-          <CartesianGrid strokeDasharray="3 3" />
-          <XAxis dataKey="date" tick={false} />
           <YAxis domain={["dataMin - 2", "dataMax + 2"]} />
           <Tooltip
-            formatter={(value, name, props) => [
+            formatter={(value, name) => [
               value,
               name === "close" ? "Close Price" : name,
             ]}
-            labelFormatter={(label) => `Time: ${label.substring(11, 16)}`}
+            labelFormatter={(label) => {
+              const dateObj = new Date(label);
+              const hours = dateObj.getHours().toString().padStart(2, "0");
+              const minutes = dateObj.getMinutes().toString().padStart(2, "0");
+              return `Time: ${hours}:${minutes}`;
+            }}
+            contentStyle={{
+              backgroundColor: "#1e293b",
+              border: "none",
+              borderRadius: "0.5rem",
+              color: "#fff",
+            }}
           />
-          <Legend />
-          <Line type="monotone" dataKey="close" stroke="#8884d8" dot="false" />
+
+          <Line type="monotone" dataKey="close" stroke="#8884d8" dot={false} />
         </LineChart>
       </ResponsiveContainer>
     </div>
