@@ -2,16 +2,12 @@
 import React, { useEffect, useState } from "react";
 import { Input } from "./ui/input";
 import { searchStocks } from "@/lib/api";
-import { Card } from "./ui/card";
-import { Button } from "./ui/button";
-import { useRouter } from "next/navigation";
 import Link from "next/link";
 
 function SearchBox() {
   const [query, setQuery] = useState("");
   const [showResults, setShowResults] = useState(false);
   const [results, setResults] = useState([]);
-  const router = useRouter();
 
   useEffect(() => {
     if (query.length < 3) {

@@ -1,4 +1,4 @@
-async function StockTicker({ movers }) {
+async function TargetHitStock({ movers }) {
   return (
     <div className="bg-slate-800 text-white py-4 overflow-hidden">
       <div className="flex animate-scroll-horizontal space-x-4 px-4">
@@ -61,4 +61,4 @@ async function StockTicker({ movers }) {
   );
 }
 
-export default StockTicker;
+export default TargetHitStock;
