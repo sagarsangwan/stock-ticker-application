@@ -20,7 +20,7 @@ function SearchBox() {
     const delay = setTimeout(async () => {
       try {
         const results = await searchStocks(query);
-        console.log(results);
+
         setResults(results);
         setShowResults(true);
       } catch (e) {

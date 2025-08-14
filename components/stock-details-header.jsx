@@ -4,7 +4,6 @@ import { ArrowLeft, Heart } from "lucide-react";
 import { Button } from "./ui/button";
 import Link from "next/link";
 function StockHeader({ stockDetails }) {
-  console.log(stockDetails, "//////////////");
   const [favorites, setFavorites] = useState([]);
   const [isFavorite, setIsFavorite] = useState(false);
   useEffect(() => {
@@ -20,7 +19,6 @@ function StockHeader({ stockDetails }) {
     const storedFavorites = JSON.parse(
       localStorage.getItem("favorites") || "[]"
     );
-    console.log(storedFavorites, "ggggggggggggggg");
 
     let updatedFavorites;
     if (isFavorite) {
