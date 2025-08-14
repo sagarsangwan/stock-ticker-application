@@ -2,6 +2,8 @@
 import React, { useEffect, useState } from "react";
 import { Input } from "./ui/input";
 import { searchStocks } from "@/lib/api";
+import { Card } from "./ui/card";
+import { Button } from "./ui/button";
 
 function SearchBox() {
   const [query, setQuery] = useState("");
@@ -26,16 +28,41 @@ function SearchBox() {
     }, 300);
     return () => clearTimeout(delay);
   }, [query]);
+  const handleResultClick = (clickedButton) => {
+    console.log(clickedButton);
+  };
   return (
     <div>
-      <Input
-        type="text"
-        placeholder="Search stocks (e.g., RELIANCE, TCS)"
-        value={query}
-        onChange={(e) => {
-          setQuery(e.target.value);
-        }}
-      />
+      <div>
+        <Input
+          className=""
+          type="text"
+          placeholder="Search stocks (e.g., RELIANCE, TCS)"
+          value={query}
+          onChange={(e) => {
+            setQuery(e.target.value);
+          }}
+        />
+      </div>
+      {showResults && (
+        <ul className="  ">
+          {results.length > 0 ? (
+            results.map((result) => (
+              <li
+                className="px-4 py-2 hover:bg-gray-100 cursor-pointer flex items-center"
+                onClick={() => {
+                  handleResultClick(result.symbol);
+                }}
+                key={result.symbol}
+              >
+                {result.company}
+              </li>
+            ))
+          ) : (
+            <div>No result found</div>
+          )}
+        </ul>
+      )}
     </div>
   );
 }
