@@ -26,8 +26,10 @@ function StockTicker() {
 
   if (isLoading) {
     return (
-      <div className="bg-primary text-primary-foreground py-2 overflow-hidden">
-        <div className="animate-pulse text-center">Loading market data...</div>
+      <div className=" flex bg-primary text-primary-foreground py-2 overflow-hidden min-h-[200px]">
+        <div className="animate-pulse text-center m-auto items-center">
+          Loading market data...
+        </div>
       </div>
     );
   }
