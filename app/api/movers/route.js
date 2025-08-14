@@ -13,13 +13,8 @@ export async function GET() {
       );
     }
     const data = await response.json();
-    // console.log(data, "dataaaaaaaaaaaa fro api");
     return NextResponse.json(data);
   } catch (e) {
-    console.log(e);
-    return NextResponse.json(
-      { error: "failed to fetch data " },
-      { status: 500 }
-    );
+    return NextResponse.json({ error: e.message }, { status: 500 });
   }
 }
