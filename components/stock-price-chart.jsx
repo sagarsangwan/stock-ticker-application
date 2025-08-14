@@ -1,14 +1,26 @@
 "use client";
 import React from "react";
 import {
-  LineChart,
+  ComposedChart,
   Line,
   ResponsiveContainer,
   Tooltip,
   YAxis,
   XAxis,
+  Bar,
 } from "recharts";
-
+function formatNumber(num) {
+  if (num >= 1000000000) {
+    return (num / 1000000000).toFixed(2).replace(/\.0$/, "") + "B";
+  }
+  if (num >= 1000000) {
+    return (num / 1000000).toFixed(2).replace(/\.0$/, "") + "M";
+  }
+  if (num >= 1000) {
+    return (num / 1000).toFixed(2).replace(/\.0$/, "") + "k";
+  }
+  return num;
+}
 function StockPriceChart({ stockPrices, stockPerformance }) {
   const isGain = stockPerformance.status === "GAIN";
   const isLoss = stockPerformance.status === "LOSS";
@@ -36,17 +48,28 @@ function StockPriceChart({ stockPrices, stockPerformance }) {
       </div>
 
       <ResponsiveContainer width="100%" height={300}>
-        <LineChart data={stockPrices}>
+        <ComposedChart width={500} height={400} data={stockPrices}>
           <YAxis
-            domain={["dataMin - 2", "dataMax + 2"]}
+            yAxisId="left"
+            domain={["dataMin - 2", "dataMax + 1"]}
             tick={{ fontSize: 12 }}
             tickFormatter={(value) => `₹${value.toFixed(0)}`}
           />
-          <XAxis dataKey="date" tick={false} />
+          <YAxis
+            yAxisId="right"
+            orientation="right"
+            tickFormatter={(value) => `${formatNumber(value)}`}
+          />
+
+          <XAxis yAxisId={"lineChart"} dataKey="date" tick={false} />
 
           <Tooltip
             classname="text-sm"
-            formatter={(value) => [`₹${value}`, "Close Price"]}
+            formatter={(value, name) =>
+              name == "close"
+                ? [`₹${value}`, "Close Price"]
+                : [`${value}`, "Volume"]
+            }
             labelFormatter={(label) =>
               `Time: ${new Date(label).toLocaleTimeString([], {
                 hour: "2-digit",
@@ -57,13 +80,28 @@ function StockPriceChart({ stockPrices, stockPerformance }) {
               backgroundColor: "#1e293b",
               border: "none",
               borderRadius: "0.5rem",
-              color: "#fff",
+              color: "white",
               font: "small-caption",
+
               padding: "1px",
             }}
           />
-          <Line type="monotone" dataKey="close" stroke="#8884d8" dot={false} />
-        </LineChart>
+          <Bar
+            dataKey="volume"
+            yAxisId="right"
+            barSize={20}
+            fill="#413ea0"
+            opacity={"30%"}
+          />
+          <Line
+            yAxisId="left"
+            type="monotone"
+            dataKey="close"
+            stroke="#8884d8"
+            dot={false}
+          />
+          {/* <Line   type="monotone" dataKey="uv" stroke="#82ca9d" /> */}
+        </ComposedChart>
       </ResponsiveContainer>
     </div>
   );

@@ -7,7 +7,14 @@ function StockHeader({ stockDetails }) {
   const [favorites, setFavorites] = useState([]);
   const [isFavorite, setIsFavorite] = useState(false);
   useEffect(() => {
-    const storedFavorites = JSON.parse(localStorage.getItem("favorites"));
+    let storedFavorites;
+    try {
+      storedFavorites = JSON.parse(localStorage?.getItem("favorites")) || [];
+    } catch (e) {
+      console.log(e);
+      return;
+    }
+
     setFavorites(storedFavorites);
     const isFav = storedFavorites.some(
       (fav) => fav.symbol === stockDetails.symbol
