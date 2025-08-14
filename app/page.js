@@ -1,11 +1,14 @@
 import SearchBox from "@/components/search-box";
 import StockTicker from "@/components/stock-ticker";
+import { fetchMovers } from "@/lib/api";
 import Image from "next/image";
 
-export default function Home() {
+export default async function Home() {
+  const movers = await fetchMovers();
+
   return (
     <div className="min-h-screen ">
-      <StockTicker />
+      <StockTicker movers={movers} />
       <main className="container mx-auto px-4 py-8">
         <div className="max-w-2xl mx-auto text-center space-y-8">
           <div className="space-y-4">
