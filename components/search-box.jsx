@@ -10,6 +10,7 @@ function SearchBox() {
   const [query, setQuery] = useState("");
   const [showResults, setShowResults] = useState(false);
   const [results, setResults] = useState([]);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
     if (query.length < 3) {
@@ -17,14 +18,16 @@ function SearchBox() {
       setShowResults(false);
       return;
     }
+    setError(null);
     const delay = setTimeout(async () => {
       try {
-        const results = await searchStocks(query);
+        const results = await searchStocks(query, 10);
 
         setResults(results);
         setShowResults(true);
       } catch (e) {
         console.log(e);
+        setError(e.message);
       }
     }, 300);
     return () => clearTimeout(delay);
@@ -51,14 +54,19 @@ function SearchBox() {
           </Link>
         </Button>
       </div>
+      {error && (
+        <span className="px-4 py-2 text-center text-red-500">
+          Error: {error}
+        </span>
+      )}
       {showResults && (
         <ul className="  ">
           {results.length > 0 ? (
-            results.map((result) => (
-              <Link key={result.symbol} href={`/stocks/${result.symbol}`}>
+            results.map((result, index) => (
+              <Link key={index} href={`/stocks/${result.symbol}`}>
                 <li
                   className="px-4 py-2 hover:bg-gray-100 cursor-pointer flex items-center"
-                  key={result.symbol}
+                  key={index}
                 >
                   {result.company}
                 </li>
