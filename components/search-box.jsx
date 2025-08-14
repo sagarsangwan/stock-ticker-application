@@ -4,11 +4,13 @@ import { Input } from "./ui/input";
 import { searchStocks } from "@/lib/api";
 import { Card } from "./ui/card";
 import { Button } from "./ui/button";
+import { useRouter } from "next/navigation";
 
 function SearchBox() {
   const [query, setQuery] = useState("");
   const [showResults, setShowResults] = useState(false);
   const [results, setResults] = useState([]);
+  const router = useRouter();
 
   useEffect(() => {
     if (query.length < 3) {
@@ -28,8 +30,9 @@ function SearchBox() {
     }, 300);
     return () => clearTimeout(delay);
   }, [query]);
-  const handleResultClick = (clickedButton) => {
-    console.log(clickedButton);
+  const handleResultClick = (clickedStock) => {
+    console.log(clickedStock);
+    return router.push(`/stock/${clickedStock}`);
   };
   return (
     <div>
