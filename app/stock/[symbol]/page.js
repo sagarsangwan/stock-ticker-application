@@ -22,9 +22,11 @@ export async function generateMetadata({ params }) {
 
 async function page({ params }) {
   const { symbol } = await params;
-  const stockDetails = await searchStocks(symbol, 1);
-  const stockPrices = await getStockPrices(symbol, 1);
-  if (!stockDetails || stockDetails.length <= 0) {
+  let stockDetails, stockPrices;
+  try {
+    stockDetails = await searchStocks(symbol, 1);
+    stockPrices = await getStockPrices(symbol, 1);
+  } catch (e) {
     return (
       <div className="flex flex-col items-center justify-center py-10 text-center  gap-3">
         <Frown />

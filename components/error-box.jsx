@@ -3,7 +3,7 @@ import { RefreshCcw } from "lucide-react";
 import { Button } from "./ui/button";
 import Link from "next/link";
 
-function ErrorBox({ message }) {
+function ErrorBox() {
   return (
     <div className="flex flex-col items-center justify-center h-12 w-full  mx-auto   p-4 bg-red-100 border border-red-400 text-red-700 ">
       <div className="flex items-center justify-center w-full gap-2">
