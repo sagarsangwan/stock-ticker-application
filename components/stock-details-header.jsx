@@ -4,12 +4,11 @@ import { ArrowLeft, Heart } from "lucide-react";
 import { Button } from "./ui/button";
 import Link from "next/link";
 function StockHeader({ stockDetails }) {
+  console.log(stockDetails, "//////////////");
   const [favorites, setFavorites] = useState([]);
   const [isFavorite, setIsFavorite] = useState(false);
   useEffect(() => {
-    const storedFavorites = JSON.parse(
-      localStorage.getItem("favorites") || "[]"
-    );
+    const storedFavorites = JSON.parse(localStorage.getItem("favorites"));
     setFavorites(storedFavorites);
     const isFav = storedFavorites.some(
       (fav) => fav.symbol === stockDetails.symbol
@@ -17,23 +16,27 @@ function StockHeader({ stockDetails }) {
     setIsFavorite(isFav);
   }, [stockDetails]);
 
-  useEffect(() => {
-    localStorage.setItem("favorites", JSON.stringify(favorites));
-  }, [favorites]);
-
   const addToFav = () => {
+    const storedFavorites = JSON.parse(
+      localStorage.getItem("favorites") || "[]"
+    );
+    console.log(storedFavorites, "ggggggggggggggg");
+
+    let updatedFavorites;
     if (isFavorite) {
-      const updatedFavorites = favorites.filter(
+      updatedFavorites = storedFavorites.filter(
         (fav) => fav.symbol !== stockDetails.symbol
       );
-      setFavorites(updatedFavorites);
       setIsFavorite(false);
     } else {
-      const updatedFavorites = [...favorites, stockDetails];
-      setFavorites(updatedFavorites);
-      setIsFavorite(true);
+      updatedFavorites = [...storedFavorites, stockDetails];
     }
+    setIsFavorite(true);
+
+    setFavorites(updatedFavorites);
+    localStorage.setItem("favorites", JSON.stringify(updatedFavorites));
   };
+
   return (
     <div className="flex flex-wrap items-center justify-between gap-2 mb-4 p-2 ">
       <div className="flex items-center space-x-3">
