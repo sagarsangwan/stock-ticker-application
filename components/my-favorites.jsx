@@ -29,7 +29,7 @@ function MyFAvorites() {
         {favorites.map((fav) => (
           <Link
             key={fav.symbol}
-            href={`/stock/${fav.symbol}`}
+            href={`/stocks/${fav.symbol}`}
             className="border rounded-lg p-4 shadow-sm hover:shadow-md transition bg-white flex items-center justify-between"
           >
             <div>
