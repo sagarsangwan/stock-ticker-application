@@ -10,10 +10,31 @@ import {
 } from "recharts";
 
 function StockPriceChart({ stockPrices, stockPerformance }) {
+  const isGain = stockPerformance.status === "GAIN";
+  const isLoss = stockPerformance.status === "LOSS";
   return (
     <div className=" rounded-lg border p-6">
-      {stockPerformance.lastPrice} {stockPerformance.gainOrLoss}
-      {stockPerformance.percent}
+      <div className="mb-3 flex items-center gap-4 text-sm">
+        <span className="text-lg font-semibold text-white">
+          ₹{stockPerformance.lastPrice}
+        </span>
+        <span
+          className={`${
+            isGain
+              ? "text-green-400"
+              : isLoss
+              ? "text-red-400"
+              : "text-gray-400"
+          }`}
+        >
+          {isGain ? "+" : ""}
+          {stockPerformance.gainOrLoss} ({stockPerformance.percent}%)
+        </span>
+        <span className="uppercase text-gray-400">
+          {stockPerformance.status}
+        </span>
+      </div>
+
       <ResponsiveContainer width="100%" height={300}>
         <LineChart data={stockPrices}>
           <YAxis
