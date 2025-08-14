@@ -3,20 +3,91 @@ import React, { useEffect, useState } from "react";
 
 function StockTicker() {
   const [movers, setMovers] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
   useEffect(() => {
     async function fetchMovers() {
       try {
         const res = await fetch("/api/movers", { cache: "no-store" });
         const data = await res.json();
-        console.log(data);
-        setMovers(data);
+        // setMovers(Array.isArray(data) ? data : data.gainers || []);
+        setMovers(
+          [...(data.gainers || []), ...(data.losers || [])].sort(
+            () => Math.random() - 0.5
+          )
+        );
       } catch (e) {
         console.log(e);
+      } finally {
+        setIsLoading(false);
       }
     }
     fetchMovers();
   }, []);
-  return <div>hii</div>;
+
+  if (isLoading) {
+    return (
+      <div className="bg-primary text-primary-foreground py-2 overflow-hidden">
+        <div className="animate-pulse text-center">Loading market data...</div>
+      </div>
+    );
+  }
+  return (
+    <div className="bg-slate-800 text-white py-4 overflow-hidden">
+      <div className="flex animate-scroll-horizontal space-x-4 px-4">
+        {movers.map((mover, index) => (
+          <div
+            key={`${index}`}
+            className="flex-shrink-0 bg-slate-700  rounded-lg p-4 min-w-[280px] border border-slate-600"
+          >
+            <div className="flex items-center justify-between mb-3">
+              <div className="flex items-center space-x-2">
+                <div className="w-8 h-8 bg-blue-500 rounded-full flex items-center justify-center text-xs font-bold">
+                  {mover.symbol.slice(0, 2)}
+                </div>
+                <span className="font-medium text-white">
+                  {mover.comp_name.slice(0, 8) + "..."}
+                </span>
+              </div>
+              <span
+                className={`px-2 py-1 text-xs rounded-full ${
+                  mover.percent > 0 ? "bg-green-600" : "bg-red-600"
+                }`}
+              >
+                {mover.percent > 0 ? "Target Achieved" : "In Progress"}
+              </span>
+            </div>
+
+            <div className="grid grid-cols-2 gap-4 text-sm">
+              <div>
+                <div className="text-slate-400 text-xs">P@Reco:</div>
+                <div className="font-semibold text-white">
+                  ₹{mover.prev_close.toFixed(2)}
+                </div>
+              </div>
+              <div>
+                <div className="text-slate-400 text-xs">Target:</div>
+                <div className="font-semibold text-white">
+                  ₹{mover.close.toFixed(2)}
+                </div>
+              </div>
+              <div>
+                <div className="text-slate-400 text-xs">Rating</div>
+                <div className="font-semibold text-green-400">
+                  {mover.change >= 0 ? "BUY" : "HOLD"}
+                </div>
+              </div>
+              <div>
+                <div className="text-slate-400 text-xs">Profit Booked</div>
+                <div className="font-semibold text-green-400">
+                  {/* {mover.profitPercent.toFixed(2)}% */}
+                </div>
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
 }
 
 export default StockTicker;

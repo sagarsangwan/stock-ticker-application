@@ -1,9 +1,11 @@
+import next from "next";
 import { NextResponse } from "next/server";
 
 export async function GET() {
   try {
     const response = await fetch(
-      "https://portal.tradebrains.in/api/assignment/index/NIFTY/movers/"
+      "https://portal.tradebrains.in/api/assignment/index/NIFTY/movers/",
+      { next: { revalidate: 30 } }
     );
     if (!response.ok) {
       return NextResponse.json(
@@ -12,7 +14,7 @@ export async function GET() {
       );
     }
     const data = await response.json();
-    console.log(data, "dataaaaaaaaaaaa fro api");
+    // console.log(data, "dataaaaaaaaaaaa fro api");
     return NextResponse.json(data);
   } catch (e) {
     console.log(e);
