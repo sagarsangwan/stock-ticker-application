@@ -60,26 +60,29 @@ function StockTicker() {
             <div className="grid grid-cols-2 gap-4 text-sm">
               <div>
                 <div className="text-slate-400 text-xs">P@Reco:</div>
-                <div className="font-semibold text-white">
-                  ₹{mover.prev_close.toFixed(2)}
-                </div>
+                <div className="font-semibold text-white">₹{mover.open}</div>
               </div>
               <div>
                 <div className="text-slate-400 text-xs">Target:</div>
                 <div className="font-semibold text-white">
-                  ₹{mover.close.toFixed(2)}
+                  ₹{(mover.close * 1.05).toFixed(2)}
                 </div>
               </div>
               <div>
                 <div className="text-slate-400 text-xs">Rating</div>
                 <div className="font-semibold text-green-400">
-                  {mover.change >= 0 ? "BUY" : "HOLD"}
+                  {mover.open < mover.close ? "BUY" : "HOLD"}
                 </div>
               </div>
               <div>
                 <div className="text-slate-400 text-xs">Profit Booked</div>
-                <div className="font-semibold text-green-400">
-                  {/* {mover.profitPercent.toFixed(2)}% */}
+                <div
+                  className={`font-semibold ${
+                    mover.percent >= 0 ? "text-green-400" : "text-red-600"
+                  }`}
+                >
+                  {(((mover.close - mover.open) / mover.open) * 100).toFixed(2)}{" "}
+                  %
                 </div>
               </div>
             </div>
