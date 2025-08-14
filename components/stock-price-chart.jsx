@@ -13,7 +13,7 @@ function StockPriceChart({ stockPrices, stockPerformance }) {
   const isGain = stockPerformance.status === "GAIN";
   const isLoss = stockPerformance.status === "LOSS";
   return (
-    <div className=" rounded-lg border p-6">
+    <div className=" rounded-lg border p-1 md:p-6">
       <div className="mb-3 flex items-center gap-4 text-sm">
         <span className="text-lg font-semibold text-white">
           ₹{stockPerformance.lastPrice}
@@ -59,7 +59,7 @@ function StockPriceChart({ stockPrices, stockPerformance }) {
               borderRadius: "0.5rem",
               color: "#fff",
               font: "small-caption",
-              padding: "5px",
+              padding: "1px",
             }}
           />
           <Line type="monotone" dataKey="close" stroke="#8884d8" dot={false} />

@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import { ArrowLeft, Heart } from "lucide-react";
 import { Button } from "./ui/button";
 import Link from "next/link";
-function StockHeader({ stockDetails, onBack, onAddToFav }) {
+function StockHeader({ stockDetails }) {
   const [favorites, setFavorites] = useState([]);
   const [isFavorite, setIsFavorite] = useState(false);
   useEffect(() => {
@@ -35,15 +35,19 @@ function StockHeader({ stockDetails, onBack, onAddToFav }) {
     }
   };
   return (
-    <div className="flex items-center justify-between mb-4 p-2 ">
+    <div className="flex flex-wrap items-center justify-between gap-2 mb-4 p-2 ">
       <div className="flex items-center space-x-3">
         <Link href={"/"}>
           <ArrowLeft size={20} fill="true" />
         </Link>
 
         <div>
-          <div className="text-lg font-bold">{stockDetails.company}</div>
-          <div className="text-sm text-slate-400">{stockDetails.symbol}</div>
+          <div className="text-sm md:text-lg font-bold leading-tight">
+            {stockDetails.company}
+          </div>
+          <div className="text-xs md:text-sm text-slate-400">
+            {stockDetails.symbol}
+          </div>
         </div>
       </div>
 
@@ -54,8 +58,10 @@ function StockHeader({ stockDetails, onBack, onAddToFav }) {
           isFavorite ? "text-gray-900" : "text-white"
         }  transition-colors duration-200`}
       >
-        <Heart fill={isFavorite ? "red" : "none"} color="red" />
-        {isFavorite ? "Favorited" : "Add to Favorites"}
+        <Heart size={20} fill={isFavorite ? "red" : "none"} color="red" />
+        <span className="hidden sm:inline">
+          {isFavorite ? "Favorited" : "Add to Favorites"}
+        </span>
       </Button>
     </div>
   );
