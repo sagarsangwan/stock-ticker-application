@@ -6,6 +6,7 @@ export async function GET(request, { params }) {
   const type = searchParams.get("type") || "INTRADAY";
   const limit = searchParams.get("limit") || "1000";
   const { symbol } = await params;
+  console.log(symbol);
   try {
     const response = await fetch(
       `https://portal.tradebrains.in/api/assignment/stock/${symbol}/prices?days=${days}&type=${type}&limit=${limit}`
