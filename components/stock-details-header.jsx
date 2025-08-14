@@ -44,7 +44,7 @@ function StockHeader({ stockDetails }) {
 
         <div>
           <div className="text-sm md:text-lg font-bold leading-tight">
-            {stockDetails.company}
+            {stockDetails?.company}
           </div>
           <div className="text-xs md:text-sm text-slate-400">
             {stockDetails.symbol}
