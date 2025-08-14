@@ -32,7 +32,7 @@ function SearchBox() {
   }, [query]);
   const handleResultClick = (clickedStock) => {
     console.log(clickedStock);
-    return router.push(`/stock/${clickedStock}`);
+    return router.push(`/stock/${clickedStock.toLowerCase()}`);
   };
   return (
     <div>
